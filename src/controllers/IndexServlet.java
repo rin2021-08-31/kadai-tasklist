@@ -20,7 +20,6 @@ public class IndexServlet extends HttpServlet {
 
     public IndexServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,19 +32,19 @@ public class IndexServlet extends HttpServlet {
         } catch(NumberFormatException e) {}
 
         // 最大件数と開始位置を指定してメッセージを取得
-        List<Task> tasks = em.createNamedQuery("getAllMessages", Task.class)
+        List<Task> tasks = em.createNamedQuery("getAllTask", Task.class)
                                    .setFirstResult(5 * (page - 1))
                                    .setMaxResults(5)
                                    .getResultList();
 
         // 全件数を取得
-        long messages_count = (long)em.createNamedQuery("getMessagesCount", Long.class)
+        long tasks_count = (long)em.createNamedQuery("getTaskCount", Long.class)
                                       .getSingleResult();
 
         em.close();
 
         request.setAttribute("tasks", tasks);
-        request.setAttribute("messages_count", messages_count);     // 全件数
+        request.setAttribute("tasks_count", tasks_count);     // 全件数
         request.setAttribute("page", page);                         // ページ数
 
         // フラッシュメッセージがセッションスコープにセットされていたら
